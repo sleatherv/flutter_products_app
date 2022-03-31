@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:products_app/ui/input_decorations.dart';
 import 'package:products_app/widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -45,27 +46,39 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                  color: Colors.deepPurple
-                  )
+              decoration: InputDecorations.authInputDecoration(
+                hinText: 'john.doe@gmail.com',
+                lableText: 'Correo electrónico',
+                prefixIcon: Icons.alternate_email_outlined
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepPurple,
-                    width: 2
-                  )
-                ),
-                hintText: 'john.doe@example.com',
-                labelText: 'Correo electrónico',
-                labelStyle:  TextStyle(
-                  color: Colors.grey
-                ),
-                prefixIcon: Icon(Icons.alternate_email_outlined, color: Colors.deepPurple)
-
+            ),
+            const SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              obscureText: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecorations.authInputDecoration(
+                hinText: '****',
+                lableText: 'Contraseña',
+                prefixIcon: Icons.lock_outline
               ),
-            )
+            ),
+            const SizedBox(height: 30),
+            MaterialButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              disabledColor: Colors.grey,
+              elevation: 0,
+              color: Colors.deepPurple,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                child: const Text(
+                  'Ingresar',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onPressed: () {
+              //Todo: Login form
+            },)
           ],
         )
       ),

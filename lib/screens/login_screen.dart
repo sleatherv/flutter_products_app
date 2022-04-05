@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:products_app/providers/login_form_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'package:products_app/ui/input_decorations.dart';
 import 'package:products_app/widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
-   
+
   const LoginScreen({Key? key}) : super(key: key);
   
   @override
@@ -20,7 +23,10 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     Text('Login', style: Theme.of(context).textTheme.headline4),
                     const SizedBox(height: 10),
-                    _LoginForm()
+                    ChangeNotifierProvider(
+                      create: (_) => LoginFormProvider(),
+                      child: _LoginForm()
+                    ),
                   ],
                 )
               ),
@@ -38,10 +44,12 @@ class _LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginForm = Provider.of<LoginFormProvider>(context);
+
     return Container(
       child: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        //Todo: Keep reference to KEY
+        key: loginForm.formKey,
         child: Column(
           children: [
             TextFormField(
@@ -52,6 +60,7 @@ class _LoginForm extends StatelessWidget {
                 lableText: 'Correo electrónico',
                 prefixIcon: Icons.alternate_email_outlined
                 ),
+              onChanged: (value) => loginForm.email = value,
               validator: (value) {
                 String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                 RegExp regExp  = new RegExp(pattern);
@@ -65,12 +74,13 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               obscureText: true,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.text,
               decoration: InputDecorations.authInputDecoration(
                 hinText: '****',
                 lableText: 'Contraseña',
                 prefixIcon: Icons.lock_outline
               ),
+              onChanged: (value) => loginForm.password = value,
               validator: (value) {
                 if(value != null && value.length >=6) return null;
 
@@ -91,7 +101,9 @@ class _LoginForm extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-              //Todo: Login form
+              if(!loginForm.isValidForm()) return;
+
+              Navigator.pushReplacementNamed(context, 'home');
             },)
           ],
         )

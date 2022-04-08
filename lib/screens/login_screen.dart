@@ -46,77 +46,75 @@ class _LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
 
-    return Container(
-      child: Form(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        key: loginForm.formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
-                hinText: 'john.doe@gmail.com',
-                lableText: 'Correo electrónico',
-                prefixIcon: Icons.alternate_email_outlined
-                ),
-              onChanged: (value) => loginForm.email = value,
-              validator: (value) {
-                String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regExp  = new RegExp(pattern);
-
-                return regExp.hasMatch(value ?? '')
-                  ? null
-                  : 'El valor ingresado no luce como un correo';
-              },
-            ),
-            const SizedBox(height: 30),
-            TextFormField(
-              autocorrect: false,
-              obscureText: true,
-              keyboardType: TextInputType.text,
-              decoration: InputDecorations.authInputDecoration(
-                hinText: '****',
-                lableText: 'Contraseña',
-                prefixIcon: Icons.lock_outline
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      key: loginForm.formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            autocorrect: false,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecorations.authInputDecoration(
+              hinText: 'john.doe@gmail.com',
+              lableText: 'Correo electrónico',
+              prefixIcon: Icons.alternate_email_outlined
               ),
-              onChanged: (value) => loginForm.password = value,
-              validator: (value) {
-                if(value != null && value.length >=6) return null;
+            onChanged: (value) => loginForm.email = value,
+            validator: (value) {
+              String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+              RegExp regExp  = RegExp(pattern);
 
-                return 'La contraseña debe contener 6 caracteres.';
-              },
+              return regExp.hasMatch(value ?? '')
+                ? null
+                : 'El valor ingresado no luce como un correo';
+            },
+          ),
+          const SizedBox(height: 30),
+          TextFormField(
+            autocorrect: false,
+            obscureText: true,
+            keyboardType: TextInputType.text,
+            decoration: InputDecorations.authInputDecoration(
+              hinText: '****',
+              lableText: 'Contraseña',
+              prefixIcon: Icons.lock_outline
             ),
-            const SizedBox(height: 30),
-            MaterialButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              disabledColor: Colors.grey,
-              elevation: 0,
-              color: Colors.deepPurple,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                child: Text(
-                  loginForm.isLoading
-                  ?'Espere'
-                  :'Ingresar',
-                  style: TextStyle(color: Colors.white),
-                ),
+            onChanged: (value) => loginForm.password = value,
+            validator: (value) {
+              if(value != null && value.length >=6) return null;
+
+              return 'La contraseña debe contener 6 caracteres.';
+            },
+          ),
+          const SizedBox(height: 30),
+          MaterialButton(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            disabledColor: Colors.grey,
+            elevation: 0,
+            color: Colors.deepPurple,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+              child: Text(
+                loginForm.isLoading
+                ?'Espere'
+                :'Ingresar',
+                style: const TextStyle(color: Colors.white),
               ),
-              onPressed: loginForm.isLoading? null : () async {
-                FocusScope.of(context).unfocus(); //Hide Keyboard
-                
-                loginForm.isLoading = true;
-                
-                if(!loginForm.isValidForm()) return;
-                
-                await Future.delayed(Duration(seconds: 2));
-                //Todo: validate is login is correct
-                loginForm.isLoading = false;
-                Navigator.pushReplacementNamed(context, 'home');
-            },)
-          ],
-        )
-      ),
+            ),
+            onPressed: loginForm.isLoading? null : () async {
+              FocusScope.of(context).unfocus(); //Hide Keyboard
+              
+              loginForm.isLoading = true;
+              
+              if(!loginForm.isValidForm()) return;
+              
+              await Future.delayed(const Duration(seconds: 2));
+              //Todo: validate is login is correct
+              loginForm.isLoading = false;
+              Navigator.pushReplacementNamed(context, 'home');
+          },)
+        ],
+      )
     );
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:products_app/providers/providers.dart';
 import 'package:products_app/services/products_service.dart';
 import 'package:products_app/ui/input_decorations.dart';
 import 'package:products_app/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
    
@@ -35,6 +37,7 @@ class _ProductScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
           children: [
             Stack(
@@ -108,16 +111,20 @@ class _ProductForm extends StatelessWidget {
               const SizedBox(height: 30),
               TextFormField(
                 initialValue: '${product.price}',
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
+                ],
                 keyboardType: TextInputType.number,
                 decoration: InputDecorations.authInputDecoration(
                   hinText:'\$150',
                   lableText: 'Precio:'
                 ),
                 onChanged: (value){
-                  if(double.tryParse(value) == null){
+                  if(double.tryParse(value) == null || value == ""){
                     product.price = 0;
+                  }else{
+                    product.price = double.parse(value);  
                   }
-                  product.price = double.parse(value);  
                 },
                 validator: (value) {
                   if(value == null || value.isEmpty){
@@ -131,9 +138,7 @@ class _ProductForm extends StatelessWidget {
                 value:product.available,
                 title: const Text('Disponible'),
                 activeColor: Colors.indigo,
-                onChanged: (value) {
-                  //Todo: Pending
-                },
+                onChanged: productForm.updateAvailability //Send value by reference
               )
             ],
           )

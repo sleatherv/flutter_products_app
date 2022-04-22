@@ -102,6 +102,7 @@ class _ProductForm extends StatelessWidget {
                   if(value == null || value.isEmpty){
                     return 'El nombre es obligatorio';
                   }
+                  return '';
                 },
               ),
               const SizedBox(height: 30),
@@ -122,6 +123,7 @@ class _ProductForm extends StatelessWidget {
                   if(value == null || value.isEmpty){
                     return 'El precio es obligatorio';
                   }
+                  return '';
                 },
               ),
               const SizedBox(height: 30),

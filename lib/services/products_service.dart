@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:products_app/models/models.dart';
@@ -7,6 +8,8 @@ import 'package:http/http.dart' as http;
 class ProductsService extends ChangeNotifier{
   final String _baseUrl = "flutter-varios-e7cf2-default-rtdb.firebaseio.com";
   final List<Product> products = [];
+
+  File? newPictureFile;
 
   late Product selectedProduct;
   bool isLoading = true;
@@ -76,6 +79,13 @@ class ProductsService extends ChangeNotifier{
     products[index] = product;
     
     return product.id!;
+  }
+
+  void updateSelectedProductImage(String path){
+    selectedProduct.picture = path;
+    newPictureFile = File.fromUri(Uri(path: path));
+
+    notifyListeners();
 
   }
 }

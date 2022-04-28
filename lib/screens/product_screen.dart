@@ -166,7 +166,7 @@ class _ProductForm extends StatelessWidget {
               SwitchListTile.adaptive(
                 value:product.available,
                 title: const Text('Disponible'),
-                activeColor: Colors.indigo,
+                activeColor: Colors.deepPurple,
                 onChanged: productForm.updateAvailability //Send value by reference
               )
             ],

@@ -99,7 +99,7 @@ class _PriceTag extends StatelessWidget {
       height: 70,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
-        color: Colors.indigo,
+        color: Colors.deepPurple,
         borderRadius: BorderRadius.only(topRight: Radius.circular(25), bottomLeft: Radius.circular(25))
       ),
     );
@@ -144,7 +144,7 @@ class _ProductDetails extends StatelessWidget {
   }
 
   BoxDecoration _buildBoxDecoration() => const BoxDecoration(
-    color: Colors.indigo,
+    color: Colors.deepPurple,
     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), topRight:Radius.circular(25))
   );
 }

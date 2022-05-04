@@ -3,7 +3,12 @@ import 'package:products_app/screens/screens.dart';
 import 'package:products_app/services/services.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(AppState());
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+Future main() async{
+  await dotenv.load(fileName: ".env");
+  runApp(AppState());
+} 
 
 class AppState extends StatelessWidget {
   

@@ -118,12 +118,11 @@ class _LoginForm extends StatelessWidget {
               final String? errorMessage = await authService.createUser(loginForm.email, loginForm.password);
 
               if(errorMessage == null){
-                await Future.delayed(const Duration(seconds: 2));
+                await Future.delayed(const Duration(seconds: 1));
                 Navigator.pushReplacementNamed(context, 'home');
               }else{
-                print(errorMessage);
+                loginForm.isLoading = false;
               }
-              loginForm.isLoading = false;
           },)
         ],
       )

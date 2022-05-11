@@ -119,7 +119,8 @@ class _LoginForm extends StatelessWidget {
                         await Future.delayed(const Duration(seconds: 1));
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
-                        NotificationsService.showSnackBar(errorMessage);
+                        NotificationsService.showSnackBar(
+                            "Incorrect User Email or Password");
                         loginForm.isLoading = false;
                       }
                     },

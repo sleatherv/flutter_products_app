@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: NotificationsService.messengerKey,
       debugShowCheckedModeBanner: false,
       title: 'Productos App',
-      initialRoute: 'checking',
+      initialRoute: 'login',
       routes: {
         'home': (_) => const HomeScreen(),
         'product': (_) => const ProductScreen(),
